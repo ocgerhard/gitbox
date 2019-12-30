@@ -22,20 +22,10 @@ pipeline {
         }
 
         stage('publish') {
-            steps {
-                script {
-                    echo 'Pushing to Nexus...'
+        
+		nexusPublisher nexusInstanceId: 'nexus3', nexusRepositoryId: 'v2'
 
-                       withDockerRegistry([ credentialsId: "nexus-cloud", url: "https://10.0.0.5/repository/oc-docker/" ]) {
-
-                         script {
-                                    def customImage = docker.build("gitbox:${env.BUILD_ID}")
-                                    customImage.push()
-                                }
-                       }
-                }
-            }
-        }
+	}
     }
 
     post {
