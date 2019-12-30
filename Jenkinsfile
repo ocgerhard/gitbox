@@ -22,8 +22,9 @@ pipeline {
         }
    
         stage('publish') {
-        
+	steps {        
 		nexusPublisher nexusInstanceId: 'nexus3', nexusRepositoryId: 'v2'
+	      }
 
 	}
    }
