@@ -20,12 +20,13 @@ pipeline {
                 }
             }
         }
-   }
+   
         stage('publish') {
         
 		nexusPublisher nexusInstanceId: 'nexus3', nexusRepositoryId: 'v2'
 
 	}
+   }
 
     post {
 
