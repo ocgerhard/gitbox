@@ -23,7 +23,18 @@ pipeline {
    
         stage('publish') {
 	steps { 
-  		nexusPublisher nexusInstanceId: 'nexus3', nexusRepositoryId: 'ocdocker', packages: []       
+
+		withDockerRegistry([url: 'https://ocnexus.opencollab.co.za/repository/oc-docker/', credentialsId: '06066572-c607-4f28-a4d6-adc78913ca6d']) {
+		sh "docker build --no-cache --force-rm -t ocnexus.opencollab.co.za/repository/oc-docker/gitbox:latest ${WORKSPACE}"
+		sh "docker tag ocnexus.opencollab.co.za/repository/oc-docker/gitbox:latest ocnexus.opencollab.co.za/repository/oc-docker/gitbox:b${env.BUILD_NUMBER}"
+		// Push
+		sh "docker push ocnexus.opencollab.co.za/repository/oc-docker/gitbox:latest"
+		sh "docker push ocnexus.opencollab.co.za/repository/oc-docker/gitbox:b${env.BUILD_NUMBER}"
+		// Cleanup
+		sh "docker rmi ocnexus.opencollab.co.za/repository/oc-docker/gitbox:latest"
+		sh "docker rmi ocnexus.opencollab.co.za/repository/oc-docker/gitbox:b${env.BUILD_NUMBER}"
+		}
+
 	      }
 
 	}
