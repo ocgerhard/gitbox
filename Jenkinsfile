@@ -24,7 +24,7 @@ pipeline {
         stage('publish') {
 	steps { 
 
-		withDockerRegistry([url: 'https://ocnexus.opencollab.co.za/repository/oc-docker/', credentialsId: '06066572-c607-4f28-a4d6-adc78913ca6d']) {
+		withDockerRegistry([url: 'https://ocnexus.opencollab.co.za/', credentialsId: '06066572-c607-4f28-a4d6-adc78913ca6d']) {
 		sh "docker build --no-cache --force-rm -t ocnexus.opencollab.co.za/repository/oc-docker/gitbox:latest ${WORKSPACE}"
 		sh "docker tag ocnexus.opencollab.co.za/repository/oc-docker/gitbox:latest ocnexus.opencollab.co.za/repository/oc-docker/gitbox:b${env.BUILD_NUMBER}"
 		// Push
