@@ -24,15 +24,15 @@ pipeline {
         stage('publish') {
 	steps { 
 
-		withDockerRegistry([url: 'https://ocnexus.opencollab.co.za/', credentialsId: '06066572-c607-4f28-a4d6-adc78913ca6d']) {
-		sh "docker build --no-cache --force-rm -t ocnexus.opencollab.co.za/repository/oc-docker/gitbox:latest ${WORKSPACE}"
-		sh "docker tag ocnexus.opencollab.co.za/repository/oc-docker/gitbox:latest ocnexus.opencollab.co.za/repository/oc-docker/gitbox:b${env.BUILD_NUMBER}"
+		withDockerRegistry([url: 'https://ocnexus-docker.opencollab.co.za:10801/', credentialsId: '06066572-c607-4f28-a4d6-adc78913ca6d']) {
+		sh "docker build --no-cache --force-rm -t ocnexus-docker.opencollab.co.za:10801/repository/oc-docker/gitbox:latest ${WORKSPACE}"
+		sh "docker tag ocnexus-docker.opencollab.co.za:10801/repository/oc-docker/gitbox:latest ocnexus-docker.opencollab.co.za:10801/repository/oc-docker/gitbox:b${env.BUILD_NUMBER}"
 		// Push
-		sh "docker push ocnexus.opencollab.co.za/repository/oc-docker/gitbox:latest"
-		sh "docker push ocnexus.opencollab.co.za/repository/oc-docker/gitbox:b${env.BUILD_NUMBER}"
+		sh "docker push ocnexus-docker.opencollab.co.za:10801/repository/oc-docker/gitbox:latest"
+		sh "docker push ocnexus-docker.opencollab.co.za:10801/repository/oc-docker/gitbox:b${env.BUILD_NUMBER}"
 		// Cleanup
-		sh "docker rmi ocnexus.opencollab.co.za/repository/oc-docker/gitbox:latest"
-		sh "docker rmi ocnexus.opencollab.co.za/repository/oc-docker/gitbox:b${env.BUILD_NUMBER}"
+		sh "docker rmi ocnexus-docker.opencollab.co.za:10801/repository/oc-docker/gitbox:latest"
+		sh "docker rmi ocnexus-docker.opencollab.co.za:10801/repository/oc-docker/gitbox:b${env.BUILD_NUMBER}"
 		}
 
 	      }
